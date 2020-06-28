@@ -9,11 +9,11 @@ defmodule TodoWeb.Live.Component.TodoItem do
         <div>
           <%= f = form_for @changeset, "#", [phx_target: @myself, phx_submit: :edit, autocomplete: "off", autocorrect: "off", autocapitalize: "off", spellcheck: "false"] %>
             <div class="view">
-              <%= checkbox f, :completed, [class: "toggle", phx_click: "complete", phx_target: @myself] %>
+              <%= checkbox f, :completed, [id: @toggle_uuid, class: "toggle", phx_click: "complete", phx_target: @myself] %>
               <label><%= link @text, to: "#", phx_click: "toggle_edit", phx_target: @myself %></label>
               <button phx-value-id=<%= @id %> phx-click="delete_todo" type="button" class="destroy"></button>
             </div>
-            <%= text_input f, :text, [class: "edit", phx_blur: :blur_text, phx_target: @myself] %>
+            <%= text_input f, :text, [id: @uuid, class: "edit", phx_blur: :blur_text, phx_target: @myself] %>
           </form>
         </div>
       </li>
@@ -21,7 +21,9 @@ defmodule TodoWeb.Live.Component.TodoItem do
   end
 
   def mount(socket) do
-    {:ok, assign(socket, editing: false)}
+    uuid = Ecto.UUID.generate()
+
+    {:ok, assign(socket, editing: false, uuid: uuid, toggle_uuid: "toggle_#{uuid}")}
   end
 
   def update(%{todo: %{id: id, text: text, completed: completed}}, socket) do
