@@ -1,5 +1,5 @@
 defmodule TodoWeb.Live.Component.Input do
-  use TodoWeb, :live_component
+  use Phoenix.LiveComponent
 
   import Phoenix.HTML.Form
 

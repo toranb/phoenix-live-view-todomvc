@@ -15,11 +15,12 @@ defmodule TodoWeb.PageLive do
         <div>
           <div class="todoapp">
             <%= live_component Header, id: 1 do %>
-              <h1>todos</h1>
-              <.form let={f} for={@changeset} phx-target={@parent} phx-submit={:add} url="#" autocomplete="off" spellcheck="false" autocorrect="off" autocapitalize="off">
-                <%= live_component(Input, id: @uuid, form: f, field: :text) %>
-                <%= submit "submit", [class: "d-none"] %>
-              </.form>
+              <% uuid: uuid, changeset: changeset, parent: parent -> %>
+                <h1>todos</h1>
+                <.form let={f} for={changeset} phx-target={parent} phx-submit={:add} url="#" autocomplete="off" spellcheck="false" autocorrect="off" autocapitalize="off">
+                  <%= live_component(Input, id: uuid, form: f, field: :text) %>
+                  <%= submit "submit", [class: "d-none"] %>
+                </.form>
             <% end %>
             <section class="main">
               <input class="toggle-all" value="on" type="checkbox">
@@ -30,12 +31,13 @@ defmodule TodoWeb.PageLive do
               </ul>
             </section>
             <%= live_component Footer, show: assigns.show do %>
-              <span class="todo-count"><strong><%= assigns.count %></strong>item left</span>
-              <ul class="filters">
-                <li><%= link "All", to: "#", phx_click: "show_all", class: @selected.("all"), style: "cursor: pointer" %></li>
-                <li><%= link "Active", to: "#", phx_click: "show_active", class: @selected.("active"), style: "cursor: pointer" %></li>
-                <li><%= link "Completed", to: "#", phx_click: "show_completed", class: @selected.("completed"), style: "cursor: pointer" %></li>
-              </ul>
+              <% selected: selected -> %>
+                <span class="todo-count"><strong><%= assigns.count %></strong>item left</span>
+                <ul class="filters">
+                  <li><%= link "All", to: "#", phx_click: "show_all", class: selected.("all"), style: "cursor: pointer" %></li>
+                  <li><%= link "Active", to: "#", phx_click: "show_active", class: selected.("active"), style: "cursor: pointer" %></li>
+                  <li><%= link "Completed", to: "#", phx_click: "show_completed", class: selected.("completed"), style: "cursor: pointer" %></li>
+                </ul>
             <% end %>
           </div>
         </div>

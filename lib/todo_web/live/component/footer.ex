@@ -1,5 +1,5 @@
 defmodule TodoWeb.Live.Component.Footer do
-  use TodoWeb, :live_component
+  use Phoenix.LiveComponent
 
   def render(assigns) do
     ~H"""
