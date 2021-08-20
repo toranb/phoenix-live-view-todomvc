@@ -10,16 +10,16 @@ defmodule TodoWeb.PageLive do
 
   @impl true
   def render(assigns) do
-    ~L"""
+    ~H"""
       <div class="main">
         <div>
           <div class="todoapp">
             <%= live_component Header, id: 1 do %>
               <h1>todos</h1>
-              <%= f = form_for @changeset, "#", [phx_target: @parent, phx_submit: :add, autocomplete: "off", autocorrect: "off", autocapitalize: "off", spellcheck: "false"] %>
+              <.form let={f} for={@changeset} phx-target={@parent} phx-submit={:add} url="#" autocomplete="off" spellcheck="false" autocorrect="off" autocapitalize="off">
                 <%= live_component(Input, id: @uuid, form: f, field: :text) %>
                 <%= submit "submit", [class: "d-none"] %>
-              </form>
+              </.form>
             <% end %>
             <section class="main">
               <input class="toggle-all" value="on" type="checkbox">

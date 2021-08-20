@@ -4,17 +4,17 @@ defmodule TodoWeb.Live.Component.TodoItem do
   import Phoenix.HTML.Form
 
   def render(assigns) do
-    ~L"""
-      <li class="<%= is_editing(@editing) %> <%= is_completed(@completed) %>">
+    ~H"""
+      <li class={is_editing_completed(assigns)}>
         <div>
-          <%= f = form_for @changeset, "#", [phx_target: @myself, phx_submit: :edit, autocomplete: "off", autocorrect: "off", autocapitalize: "off", spellcheck: "false"] %>
+          <.form let={f} for={@changeset} phx-target={@myself} phx-submit={:edit} url="#" autocomplete="off" spellcheck="false" autocorrect="off" autocapitalize="off">
             <div class="view">
               <%= checkbox f, :completed, [id: @toggle_uuid, class: "toggle", phx_click: "complete", phx_target: @myself] %>
               <label><%= link @text, to: "#", phx_click: "toggle_edit", phx_target: @myself %></label>
-              <button phx-value-id=<%= @id %> phx-click="delete_todo" type="button" class="destroy"></button>
+              <button phx-value-id={@id} phx-click="delete_todo" type="button" class="destroy"></button>
             </div>
             <%= text_input f, :text, [id: @uuid, class: "edit", phx_blur: :blur_text, phx_target: @myself] %>
-          </form>
+          </.form>
         </div>
       </li>
     """
@@ -71,15 +71,9 @@ defmodule TodoWeb.Live.Component.TodoItem do
     {:noreply, socket}
   end
 
-  defp is_editing(editing) do
-    if editing == true do
-      "editing"
-    end
-  end
-
-  defp is_completed(completed) do
-    if completed == true do
-      "completed"
-    end
+  defp is_editing_completed(%{editing: editing, completed: completed}) do
+    editing_clazz = if editing == true, do: "editing", else: ""
+    completed_clazz = if completed == true, do: "completed", else: ""
+    "#{editing_clazz} #{completed_clazz}"
   end
 end

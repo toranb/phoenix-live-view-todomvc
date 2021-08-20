@@ -4,8 +4,10 @@ defmodule TodoWeb.Live.Component.Input do
   import Phoenix.HTML.Form
 
   def render(assigns) do
-    ~L"""
+    ~H"""
+      <i>
       <%= text_input @form, @field, [class: "new-todo", placeholder: "What needs to be done?", autofocus: true] %>
+      </i>
     """
   end
 

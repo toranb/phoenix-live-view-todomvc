@@ -2,12 +2,12 @@ defmodule TodoWeb.Live.Component.Footer do
   use TodoWeb, :live_component
 
   def render(assigns) do
-    ~L"""
-    <footer class="footer">
-      <div>
-        <%= render_block(@inner_block, selected: @selected) %>
-      </div>
-    </footer>
+    ~H"""
+      <footer class="footer">
+        <div>
+          <%= render_block(@inner_block, selected: @selected) %>
+        </div>
+      </footer>
     """
   end
 

@@ -2,7 +2,7 @@ defmodule TodoWeb.Live.Component.Header do
   use TodoWeb, :live_component
 
   def render(assigns) do
-    ~L"""
+    ~H"""
       <header class="header">
         <div>
           <%= render_block(@inner_block, uuid: @uuid, changeset: @changeset, parent: @myself) %>
