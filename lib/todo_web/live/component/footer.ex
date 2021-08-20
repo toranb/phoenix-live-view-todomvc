@@ -5,7 +5,7 @@ defmodule TodoWeb.Live.Component.Footer do
     ~L"""
     <footer class="footer">
       <div>
-        <%= @inner_content.(selected: @selected) %>
+        <%= render_block(@inner_block, selected: @selected) %>
       </div>
     </footer>
     """
@@ -15,10 +15,10 @@ defmodule TodoWeb.Live.Component.Footer do
     {:ok, socket}
   end
 
-  def update(%{inner_content: inner_content, show: show}, socket) do
+  def update(%{inner_block: inner_block, show: show}, socket) do
     {:ok,
      assign(socket,
-       inner_content: inner_content,
+       inner_block: inner_block,
        selected: fn selection -> apply(&is_selected/2, [show, selection]) end
      )}
   end

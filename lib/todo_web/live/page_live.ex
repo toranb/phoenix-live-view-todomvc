@@ -14,10 +14,10 @@ defmodule TodoWeb.PageLive do
       <div class="main">
         <div>
           <div class="todoapp">
-            <%= live_component @socket, Header, id: 1 do %>
+            <%= live_component Header, id: 1 do %>
               <h1>todos</h1>
               <%= f = form_for @changeset, "#", [phx_target: @parent, phx_submit: :add, autocomplete: "off", autocorrect: "off", autocapitalize: "off", spellcheck: "false"] %>
-                <%= live_component(@socket, Input, id: @uuid, form: f, field: :text) %>
+                <%= live_component(Input, id: @uuid, form: f, field: :text) %>
                 <%= submit "submit", [class: "d-none"] %>
               </form>
             <% end %>
@@ -25,11 +25,11 @@ defmodule TodoWeb.PageLive do
               <input class="toggle-all" value="on" type="checkbox">
               <ul class="todo-list">
                 <%= for todo <- assigns.computed_todos do %>
-                  <%= live_component(@socket, TodoItem, id: todo.id, todo: todo) %>
+                  <%= live_component(TodoItem, id: todo.id, todo: todo) %>
                 <% end %>
               </ul>
             </section>
-            <%= live_component @socket, Footer, show: assigns.show do %>
+            <%= live_component Footer, show: assigns.show do %>
               <span class="todo-count"><strong><%= assigns.count %></strong>item left</span>
               <ul class="filters">
                 <li><%= link "All", to: "#", phx_click: "show_all", class: @selected.("all"), style: "cursor: pointer" %></li>

@@ -7,9 +7,6 @@
 # General application configuration
 use Mix.Config
 
-config :todo,
-  ecto_repos: [Todo.Repo]
-
 # Configures the endpoint
 config :todo, TodoWeb.Endpoint,
   url: [host: "localhost"],

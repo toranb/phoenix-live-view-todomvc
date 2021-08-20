@@ -5,7 +5,7 @@ defmodule TodoWeb.Live.Component.Header do
     ~L"""
       <header class="header">
         <div>
-          <%= @inner_content.(uuid: @uuid, changeset: @changeset, parent: @myself) %>
+          <%= render_block(@inner_block, uuid: @uuid, changeset: @changeset, parent: @myself) %>
         </div>
       </header>
     """
