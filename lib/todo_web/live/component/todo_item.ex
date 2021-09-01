@@ -5,7 +5,7 @@ defmodule TodoWeb.Live.Component.TodoItem do
 
   def render(assigns) do
     ~H"""
-      <li class={is_editing_completed(assigns)}>
+    <li class={"#{if @editing == true, do: "editing"} #{if @completed == true, do: "completed"}"}>
         <div>
           <.form let={f} for={@changeset} phx-target={@myself} phx-submit={:edit} url="#" autocomplete="off" spellcheck="false" autocorrect="off" autocapitalize="off">
             <div class="view">
@@ -69,11 +69,5 @@ defmodule TodoWeb.Live.Component.TodoItem do
     send(self(), {:complete, %{id: id, completed: completed}})
 
     {:noreply, socket}
-  end
-
-  defp is_editing_completed(%{editing: editing, completed: completed}) do
-    editing_clazz = if editing == true, do: "editing", else: ""
-    completed_clazz = if completed == true, do: "completed", else: ""
-    "#{editing_clazz} #{completed_clazz}"
   end
 end
