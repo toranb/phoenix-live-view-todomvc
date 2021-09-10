@@ -15,10 +15,37 @@ import "../css/app.scss"
 import "phoenix_html"
 import {Socket} from "phoenix"
 import topbar from "topbar"
+import Sortable from 'sortablejs'
 import {LiveSocket} from "phoenix_live_view"
+
+let Hooks = {};
+
+Hooks.DragItem = {
+  mounted() {
+    new Sortable(this.el, {
+      group: 'cards',
+      animation: 0,
+      delay: 10,
+      ghostClass: 'opacity-25',
+      delayOnTouchOnly: true,
+      onEnd: evt => {
+        const re = /item-order-(.*[0-9])/;
+        const className = evt.target.previousElementSibling && evt.target.previousElementSibling.className || ""
+        const [_, order] = className === "" ? [null, 1] : re.exec(className);
+        const itemId = evt.target.dataset.itemId
+
+        this.pushEvent('dropped', {
+          id: parseInt(itemId, 10),
+          item_order: parseInt(order, 10)
+        });
+      },
+    });
+  }
+};
 
 let csrfToken = document.querySelector("meta[name='csrf-token']").getAttribute("content")
 let liveSocket = new LiveSocket("/live", Socket, {
+  hooks: Hooks,
   params: {_csrf_token: csrfToken},
   metadata: {
     click: (e, el) => {

@@ -61,6 +61,33 @@ defmodule TodoWeb.PageLive do
   end
 
   @impl true
+  def handle_event("dropped", %{"id" => todo_id, "item_order" => item_order}, %{assigns: %{:todos => todos, :show => show}} = socket) do
+    replace_me = todos |> Enum.find(& &1.id == todo_id)
+
+    new_todos =
+      todos
+      |> Enum.sort_by(& &1.order)
+      |> Enum.with_index()
+      |> Enum.map(fn {todo,idx} ->
+        todo
+        |> case do
+          %{id: ^todo_id} ->
+            %{todo | order: item_order}
+          %{order: ^item_order} ->
+            %{todo | order: replace_me.order}
+          _ ->
+            %{todo | order: idx + 1}
+        end
+      end)
+
+    # new_todos |> IO.inspect(label: "NEW TODOS")
+
+    %{computed_todos: computed_todos, count: count} = compute_todos(show, new_todos)
+
+    {:noreply, assign(socket, count: count, computed_todos: computed_todos, todos: new_todos)}
+  end
+
+  @impl true
   def handle_event("show_all", _, %{assigns: %{:todos => todos}} = socket) do
     show = "all"
 
