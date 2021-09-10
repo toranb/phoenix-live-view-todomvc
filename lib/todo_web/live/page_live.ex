@@ -14,10 +14,10 @@ defmodule TodoWeb.PageLive do
       <div class="main">
         <div>
           <div class="todoapp">
-            <%= live_component Header, id: 1 do %>
+            <%= live_component Header, id: Ecto.UUID.generate() do %>
               <% uuid: uuid, changeset: changeset, parent: parent -> %>
                 <h1>todos</h1>
-                <.form let={f} for={changeset} phx-target={parent} phx-submit={:add} url="#" autocomplete="off" spellcheck="false" autocorrect="off" autocapitalize="off">
+                <.form let={f} for={changeset} phx-target={parent} phx-submit={:add} id="newtodo" url="#" autocomplete="off" spellcheck="false" autocorrect="off" autocapitalize="off">
                   <%= live_component(Input, id: uuid, form: f, field: :text) %>
                   <%= submit "submit", [class: "d-none"] %>
                 </.form>
@@ -48,8 +48,12 @@ defmodule TodoWeb.PageLive do
   @impl true
   def mount(_params, _session, socket) do
     show = "all"
-    todo = %{id: 1, text: "Use Phoenix LiveView", completed: false}
-    todos = [todo]
+    todos = [
+      %{id: 1, text: "Use Phoenix LiveView", completed: false, order: 1},
+      %{id: 2, text: "hello two", completed: false, order: 2},
+      %{id: 3, text: "hello three", completed: false, order: 3},
+      %{id: 4, text: "hello four", completed: false, order: 4}
+    ]
 
     %{computed_todos: computed_todos, count: count} = compute_todos(show, todos)
 
@@ -107,7 +111,7 @@ defmodule TodoWeb.PageLive do
       |> Enum.sort_by(& &1.id)
       |> List.last()
 
-    new_todos = todos ++ [%{id: id + 1, text: text, completed: false}]
+    new_todos = todos ++ [%{id: id + 1, text: text, completed: false, order: id + 1}]
 
     %{computed_todos: computed_todos, count: count} = compute_todos(show, new_todos)
 
@@ -155,7 +159,7 @@ defmodule TodoWeb.PageLive do
   defp compute_todos(show, todos) do
     computed_todos =
       if show == "all" do
-        todos
+        todos |> Enum.sort_by(& &1.order)
       else
         completed =
           if show == "completed" do
@@ -164,7 +168,9 @@ defmodule TodoWeb.PageLive do
             false
           end
 
-        todos |> Enum.filter(fn todo -> todo.completed == completed end)
+        todos
+        |> Enum.filter(fn todo -> todo.completed == completed end)
+        |> Enum.sort_by(& &1.order)
       end
 
     count = Enum.count(computed_todos)

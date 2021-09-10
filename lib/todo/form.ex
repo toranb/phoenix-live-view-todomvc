@@ -6,11 +6,13 @@ defmodule Todo.Form do
   schema "todo_form" do
     field :text, :string
     field :completed, :boolean
+    field :order, :integer
   end
 
   @required_attrs [
     :text,
-    :completed
+    :completed,
+    :order
   ]
 
   def changeset(todo, params \\ %{}) do

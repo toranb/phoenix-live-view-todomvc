@@ -5,7 +5,7 @@ defmodule TodoWeb.Live.Component.TodoItem do
 
   def render(assigns) do
     ~H"""
-    <li class={"#{if @editing == true, do: "editing"} #{if @completed == true, do: "completed"}"}>
+      <li draggable="true" id={"todo#{@id}"} data-item-id={@id} class={"#{if @editing == true, do: "editing"} #{if @completed == true, do: "completed"} item-order-#{@order} todo-item"} phx-hook="DragItem">
         <div>
           <.form let={f} for={@changeset} phx-target={@myself} phx-submit={:edit} url="#" autocomplete="off" spellcheck="false" autocorrect="off" autocapitalize="off">
             <div class="view">
@@ -26,11 +26,11 @@ defmodule TodoWeb.Live.Component.TodoItem do
     {:ok, assign(socket, editing: false, uuid: uuid, toggle_uuid: "toggle_#{uuid}")}
   end
 
-  def update(%{todo: %{id: id, text: text, completed: completed}}, socket) do
+  def update(%{todo: %{id: id, text: text, completed: completed, order: order}}, socket) do
     %{assigns: %{editing: editing}} = socket
 
     changeset =
-      Todo.Form.changeset(%Todo.Form{id: id, text: text, completed: completed}, %{})
+      Todo.Form.changeset(%Todo.Form{id: id, text: text, completed: completed, order: order}, %{})
       |> Map.put(:action, :insert)
 
     {:ok,
@@ -39,6 +39,7 @@ defmodule TodoWeb.Live.Component.TodoItem do
        text: text,
        editing: editing,
        completed: completed,
+       order: order,
        changeset: changeset
      )}
   end

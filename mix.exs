@@ -39,6 +39,7 @@ defmodule Todo.MixProject do
       {:postgrex, ">= 0.0.0"},
       {:phoenix_live_view, "~> 0.16.3"},
       {:floki, ">= 0.0.0", only: :test},
+      {:mix_test_watch, "~> 1.0", only: :dev, runtime: false},
       {:phoenix_html, "~> 3.0"},
       {:phoenix_live_reload, "~> 1.3", only: :dev},
       {:phoenix_live_dashboard, "~> 0.5"},
@@ -58,10 +59,7 @@ defmodule Todo.MixProject do
   # See the documentation for `Mix` for more info on aliases.
   defp aliases do
     [
-      setup: ["deps.get", "ecto.setup", "cmd npm install --prefix assets"],
-      "ecto.setup": ["ecto.create", "ecto.migrate", "run priv/repo/seeds.exs"],
-      "ecto.reset": ["ecto.drop", "ecto.setup"],
-      test: ["ecto.create --quiet", "ecto.migrate", "test"]
+      setup: ["deps.get", "cmd npm install --prefix assets"]
     ]
   end
 end
