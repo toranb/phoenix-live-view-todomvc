@@ -17,14 +17,14 @@ defmodule TodoWeb.PageLive do
             <%= live_component Header, id: 1 do %>
               <% uuid: uuid, changeset: changeset, parent: parent -> %>
                 <h1>todos</h1>
-                <.form let={f} for={changeset} phx-target={parent} phx-submit={:add} url="#" autocomplete="off" spellcheck="false" autocorrect="off" autocapitalize="off">
+                <.form let={f} for={changeset} phx-target={parent} phx-submit={:add} id="newtodo" url="#" autocomplete="off" spellcheck="false" autocorrect="off" autocapitalize="off">
                   <%= live_component(Input, id: uuid, form: f, field: :text) %>
                   <%= submit "submit", [class: "d-none"] %>
                 </.form>
             <% end %>
             <section class="main">
               <input class="toggle-all" value="on" type="checkbox">
-              <ul class="todo-list">
+              <ul id="draglist" class="todo-list" phx-hook="DragItem">
                 <%= for todo <- assigns.computed_todos do %>
                   <%= live_component(TodoItem, id: todo.id, todo: todo) %>
                 <% end %>
@@ -54,6 +54,30 @@ defmodule TodoWeb.PageLive do
     %{computed_todos: computed_todos, count: count} = compute_todos(show, todos)
 
     {:ok, assign(socket, show: show, count: count, computed_todos: computed_todos, todos: todos)}
+  end
+
+  @impl true
+  def handle_event("dropped", %{"id" => todo_id, "item_order" => item_order}, %{assigns: %{:computed_todos => todos, :show => show}} = socket) do
+    todo = todos |> Enum.find(& &1.id == todo_id)
+
+    todos = todos |> Enum.reject(& &1.id == todo_id) |> Enum.sort_by(& &1.order)
+    previous = todos |> Enum.take(item_order - 1)
+    total = Enum.count(todos)
+    prev_count = Enum.count(previous)
+    remaining = todos |> Enum.reverse() |> Enum.take(total - prev_count) |> Enum.reverse()
+
+    new_todos =
+      previous
+      |> Enum.concat([todo])
+      |> Enum.concat(remaining)
+      |> Enum.with_index()
+      |> Enum.map(fn {todo,idx} ->
+        %{todo | order: idx + 1}
+      end)
+
+    %{computed_todos: computed_todos, count: count} = compute_todos(show, new_todos)
+
+    {:noreply, assign(socket, count: count, computed_todos: computed_todos, todos: new_todos)}
   end
 
   @impl true

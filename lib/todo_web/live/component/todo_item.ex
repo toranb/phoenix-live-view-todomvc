@@ -5,7 +5,7 @@ defmodule TodoWeb.Live.Component.TodoItem do
 
   def render(assigns) do
     ~H"""
-    <li class={"#{if @editing == true, do: "editing"} #{if @completed == true, do: "completed"}"}>
+    <li draggable="true" data-item-id={@id} class={"#{if @editing == true, do: "editing"} #{if @completed == true, do: "completed"} item-#{@order} todo-item"}>
         <div>
           <.form let={f} for={@changeset} phx-target={@myself} phx-submit={:edit} url="#" autocomplete="off" spellcheck="false" autocorrect="off" autocapitalize="off">
             <div class="view">
