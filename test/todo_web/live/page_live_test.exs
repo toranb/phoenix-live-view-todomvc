@@ -3,6 +3,23 @@ defmodule TodoWeb.PageLiveTest do
 
   import Phoenix.LiveViewTest
 
+  test "delete todo removes item", %{conn: conn} do
+    {:ok, view, _html} = live(conn, "/")
+
+    view |> add_todo("hello two")
+    view |> add_todo("hello three")
+
+    assert view |> element("li.item-1", "Use Phoenix LiveView") |> has_element?()
+    assert view |> element("li.item-2", "hello two") |> has_element?()
+    assert view |> element("li.item-3", "hello three") |> has_element?()
+
+    view |> element("li.item-2 button.destroy") |> render_click()
+
+    assert view |> element("li.item-1", "Use Phoenix LiveView") |> has_element?()
+    refute view |> element("li.item-2", "hello two") |> has_element?()
+    assert view |> element("li.item-3", "hello three") |> has_element?()
+  end
+
   test "drag n drop should reorder todos", %{conn: conn} do
     {:ok, view, _html} = live(conn, "/")
 
