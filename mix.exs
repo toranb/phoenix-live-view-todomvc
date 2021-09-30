@@ -40,7 +40,7 @@ defmodule Todo.MixProject do
       {:phoenix_live_view, "~> 0.16.3"},
       {:floki, ">= 0.0.0", only: :test},
       {:mix_test_watch, "~> 1.0", only: :dev, runtime: false},
-      {:phoenix_html, "~> 3.0"},
+      {:phoenix_html, "~> 3.0.4"},
       {:phoenix_live_reload, "~> 1.3", only: :dev},
       {:phoenix_live_dashboard, "~> 0.5"},
       {:telemetry_metrics, "~> 0.4"},
