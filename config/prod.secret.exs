@@ -2,7 +2,7 @@ use Mix.Config
 
 config :todo, TodoWeb.Endpoint,
   server: true,
-  url: [host: "game1101.gigalixirapp.com", port: 80],
+  url: [host: "elixirtodomvc.com", port: 80],
   http: [
     port: 4000,
     transport_options: [socket_opts: [:inet6]]
