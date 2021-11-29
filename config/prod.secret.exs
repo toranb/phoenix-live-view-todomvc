@@ -8,6 +8,9 @@ config :todo, TodoWeb.Endpoint,
     transport_options: [socket_opts: [:inet6]]
   ],
   check_origin: [
-    "https://game1101.gigalixirapp.com"
+    "http://elixirtodomvc.com",
+    "http://game1101.gigalixirapp.com",
+    "//elixirtodomvc.com",
+    "//game1101.gigalixirapp.com"
   ],
   secret_key_base: "PfmabSaMe6hM5cTQw68voWDwvGd0DqYkkH3k56wp9+qgzXP3qZhqcTSrWQJMS7w1"

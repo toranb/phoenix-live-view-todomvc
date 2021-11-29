@@ -14,7 +14,10 @@ defmodule TodoWeb.Endpoint do
     websocket: true,
     longpoll: false,
     check_origin: [
-      "https://game1101.gigalixirapp.com"
+      "http://elixirtodomvc.com",
+      "http://game1101.gigalixirapp.com",
+      "//elixirtodomvc.com",
+      "//game1101.gigalixirapp.com"
     ]
 
   socket "/live", Phoenix.LiveView.Socket, websocket: [connect_info: [session: @session_options]]
