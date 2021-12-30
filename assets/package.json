@@ -2,7 +2,16 @@
   "repository": {},
   "description": " ",
   "license": "MIT",
+  "scripts": {
+    "deploy": "NODE_ENV=production tailwindcss --postcss --minify --input=css/app.css --output=../priv/static/assets/app.css"
+  },
+  "devDependencies": {
+    "autoprefixer": "^10.3.7",
+    "postcss": "^8.3.11",
+    "tailwindcss": "^2.2.19"
+  },
   "dependencies": {
-    "sortablejs": "^1.13.0"
+    "sortablejs": "^1.13.0",
+    "@tailwindcss/line-clamp": "^0.3.0"
   }
 }
