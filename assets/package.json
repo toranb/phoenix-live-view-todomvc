@@ -3,6 +3,7 @@
   "description": " ",
   "license": "MIT",
   "dependencies": {
+    "esbuild": "^0.14.10",
     "sortablejs": "^1.13.0"
   }
 }

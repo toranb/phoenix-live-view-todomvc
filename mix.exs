@@ -62,7 +62,7 @@ defmodule Todo.MixProject do
   defp aliases do
     [
       setup: ["deps.get", "cmd npm install --prefix assets"],
-      "assets.deploy": ["esbuild default --minify", "phx.digest"]
+      "assets.deploy": ["cmd --cd assets node build.js --compile", "esbuild default --minify", "phx.digest"]
     ]
   end
 end
