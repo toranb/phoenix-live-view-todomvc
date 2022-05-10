@@ -7,6 +7,7 @@ defmodule Todo.Application do
 
   def start(_type, _args) do
     children = [
+      Todo.Repo,
       # Start the Telemetry supervisor
       TodoWeb.Telemetry,
       # Start the PubSub system

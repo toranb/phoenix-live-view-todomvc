@@ -1,5 +1,14 @@
 import Config
 
+config :todo, Todo.Repo,
+  username: "b7893822-7e18-4b67-8d3d-ec1541873bc6-user",
+  password: "pw-e82d124c-a732-4e51-b664-50821b538653",
+  database: "b7893822-7e18-4b67-8d3d-ec1541873bc6",
+  hostname: "postgres-free-tier-v2020.gigalixir.com",
+  show_sensitive_data_on_connection_error: true,
+  pool_size: 10,
+  port: 5432
+
 # For production, don't forget to configure the url host
 # to something meaningful, Phoenix uses this information
 # when generating URLs.

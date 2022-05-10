@@ -62,6 +62,8 @@ defmodule Todo.MixProject do
   defp aliases do
     [
       setup: ["deps.get", "cmd npm install --prefix assets"],
+      "ecto.setup": ["ecto.create", "ecto.migrate"],
+      "ecto.reset": ["ecto.drop", "ecto.setup"],
       "assets.deploy": ["esbuild default --minify", "phx.digest"]
     ]
   end
