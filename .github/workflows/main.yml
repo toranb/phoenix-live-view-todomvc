@@ -1,4 +1,4 @@
-name: "Prod Release"
+name: "Production Release"
 
 on:
   release:
