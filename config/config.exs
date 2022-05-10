@@ -7,6 +7,9 @@
 # General application configuration
 import Config
 
+config :todo,
+  ecto_repos: [Todo.Repo]
+
 # Configures the endpoint
 config :todo, TodoWeb.Endpoint,
   url: [host: "localhost"],
