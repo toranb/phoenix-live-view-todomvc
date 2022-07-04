@@ -37,7 +37,7 @@ defmodule Todo.MixProject do
       {:phoenix_ecto, "~> 4.4"},
       {:ecto_sql, "~> 3.6"},
       {:postgrex, ">= 0.0.0"},
-      {:phoenix_live_view, "~> 0.17.9"},
+      {:phoenix_live_view, "~> 0.17.10"},
       {:floki, ">= 0.0.0", only: :test},
       {:mix_test_watch, "~> 1.0", only: :dev, runtime: false},
       {:phoenix_html, "~> 3.2"},
