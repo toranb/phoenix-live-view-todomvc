@@ -17,7 +17,7 @@ defmodule TodoWeb.PageLive do
             <%= live_component Header, id: 1 do %>
               <% uuid: uuid, changeset: changeset, parent: parent -> %>
                 <h1>todos</h1>
-                <.form let={f} for={changeset} phx-target={parent} phx-submit={:add} id="newtodo" url="#" autocomplete="off" spellcheck="false" autocorrect="off" autocapitalize="off">
+                <.form :let={f} for={changeset} phx-target={parent} phx-submit={:add} id="newtodo">
                   <%= live_component(Input, id: uuid, form: f, field: :text) %>
                   <%= submit "submit", [class: "d-none"] %>
                 </.form>

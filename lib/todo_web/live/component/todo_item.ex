@@ -7,7 +7,7 @@ defmodule TodoWeb.Live.Component.TodoItem do
     ~H"""
     <li draggable="true" data-item-id={@id} class={"#{if @editing == true, do: "editing"} #{if @completed == true, do: "completed"} item-#{@order} todo-item"}>
         <div>
-          <.form let={f} for={@changeset} phx-target={@myself} phx-submit={:edit} url="#" autocomplete="off" spellcheck="false" autocorrect="off" autocapitalize="off">
+          <.form :let={f} for={@changeset} phx-target={@myself} phx-submit={:edit}>
             <div class="view">
               <%= checkbox f, :completed, [id: @toggle_uuid, class: "toggle", phx_click: "complete", phx_target: @myself] %>
               <label><%= link @text, to: "#", phx_click: "toggle_edit", phx_target: @myself %></label>
